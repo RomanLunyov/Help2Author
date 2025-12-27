@@ -275,10 +275,10 @@ class Database:
             (book_type,)
         )
 
-        # Получаем топ-5 книг для рекомендаций
+        # Получаем топ-5 книг для рекомендаций (среди всех книг, не завершенных)
         async with db.execute(
             f"""SELECT book_id FROM books 
-               WHERE book_type = ? AND status = 'in_queue'
+               WHERE book_type = ? AND status IN ('in_queue', 'in_recommendations')
                ORDER BY queue_position ASC 
                LIMIT {config.MAX_BOOKS_IN_RECOMMENDATIONS}""",
             (book_type,)
