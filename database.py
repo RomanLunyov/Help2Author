@@ -212,7 +212,7 @@ class Database:
             async with db.execute(
                 """SELECT b.*, u.username 
                    FROM books b
-                   JOIN users u ON b.user_id = u.telegram_id
+                   LEFT JOIN users u ON b.user_id = u.telegram_id
                    WHERE b.book_type = ? AND b.status = 'in_recommendations'
                    ORDER BY b.queue_position ASC
                    LIMIT ?""",
@@ -228,7 +228,7 @@ class Database:
             async with db.execute(
                 """SELECT b.*, u.username 
                    FROM books b
-                   JOIN users u ON b.user_id = u.telegram_id
+                   LEFT JOIN users u ON b.user_id = u.telegram_id
                    WHERE b.book_type = ? AND b.status IN ('in_queue', 'in_recommendations')
                    ORDER BY b.queue_position ASC""",
                 (book_type,)
